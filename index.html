@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Красивый JPG → PDF Конвертер</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h2>JPG → PDF Конвертер</h2>
+
+    <div id="dropArea">
+        <p>Перетащи файлы сюда или нажми, чтобы выбрать</p>
+        <input type="file" id="fileInput" accept="image/*" multiple hidden>
+    </div>
+
+    <div id="fileList"></div>
+
+    <button type="button" id="convertBtn">Сделать PDF</button>
+
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- sortable.js для перетаскивания -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>

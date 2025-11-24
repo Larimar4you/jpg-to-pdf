@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    color: #333;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #222;
+}
+
+#dropArea {
+    width: 100%;
+    max-width: 500px;
+    min-height: 150px;
+    border: 2px dashed #bbb;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    background: #fff;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+#dropArea.dragover {
+    border-color: #666;
+    background: #f0f0f0;
+}
+
+#dropArea p {
+    text-align: center;
+    color: #666;
+}
+
+#fileList {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+.file-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: 0.2s;
+}
+
+.file-row:hover {
+    background: #f0f0f0;
+}
+
+.file-row-content {
+    display: flex;
+    align-items: center;
+    cursor: grab;
+}
+
+.file-row-content img {
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    background: #9fc888;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #3b5edc;
+}
