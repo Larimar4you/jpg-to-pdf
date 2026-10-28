@@ -1,87 +1,44 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f9;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px;
-    color: #333;
-}
-
-h2 {
-    margin-bottom: 20px;
-    color: #222;
-}
-
 #dropArea {
-    width: 100%;
-    max-width: 500px;
-    min-height: 150px;
-    border: 2px dashed #bbb;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    background: #fff;
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-#dropArea.dragover {
-    border-color: #666;
-    background: #f0f0f0;
-}
-
-#dropArea p {
+    border: 2px dashed #888;
+    border-radius: 12px;
+    padding: 30px;
     text-align: center;
-    color: #666;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#dropArea.active {
+    border-color: #4CAF50;
+    background: #eaffea;
 }
 
 #fileList {
-    width: 100%;
-    max-width: 500px;
-    margin-bottom: 20px;
-}
-
-.file-row {
+    margin-top: 15px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #fff;
-    padding: 8px 12px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    transition: 0.2s;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
-.file-row:hover {
-    background: #f0f0f0;
-}
-
-.file-row-content {
+.file-item {
+    position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    cursor: grab;
 }
 
-.file-row-content img {
-    height: 40px;
-    margin-right: 10px;
-    border-radius: 5px;
-}
-
-button {
-    padding: 8px 15px;
-    border: none;
+.file-item img {
+    width: 120px;
     border-radius: 6px;
-    background: #9fc888;
-    color: white;
-    cursor: pointer;
-    transition: 0.2s;
 }
 
-button:hover {
-    background: #3b5edc;
+.delete-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
 }

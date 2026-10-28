@@ -1,122 +1,124 @@
-let filesArray = [];
-
 const dropArea = document.getElementById("dropArea");
 const fileInput = document.getElementById("fileInput");
 const fileList = document.getElementById("fileList");
 const convertBtn = document.getElementById("convertBtn");
 
-dropArea.addEventListener("click", () => fileInput.click());
+let filesArray = [];
 
-fileInput.addEventListener("change", (e) =>
-  addFiles(Array.from(e.target.files))
-);
+dropArea.addEventListener("click", () => fileInput.click());
 
 dropArea.addEventListener("dragover", (e) => {
   e.preventDefault();
-  dropArea.classList.add("dragover");
+  dropArea.classList.add("active");
 });
-dropArea.addEventListener("dragleave", (e) => {
-  e.preventDefault();
-  dropArea.classList.remove("dragover");
+
+dropArea.addEventListener("dragleave", () => {
+  dropArea.classList.remove("active");
 });
+
 dropArea.addEventListener("drop", (e) => {
   e.preventDefault();
-  dropArea.classList.remove("dragover");
-  addFiles(Array.from(e.dataTransfer.files));
+  dropArea.classList.remove("active");
+
+  errorMessage.hidden = true;
+
+  const dropped = Array.from(e.dataTransfer.files).filter((file) =>
+    validateFile(file),
+  );
+
+  filesArray.push(...dropped);
+  renderFileList();
 });
 
-function addFiles(newFiles) {
-  newFiles.forEach((f) => filesArray.push(f));
-  renderList();
-}
+fileInput.addEventListener("change", (e) => {
+  errorMessage.hidden = true;
 
-// Рендер списка с миниатюрами и кнопкой удаления
-function renderList() {
+  const selected = Array.from(e.target.files).filter((file) =>
+    validateFile(file),
+  );
+
+  filesArray.push(...selected);
+  renderFileList();
+});
+
+function renderFileList() {
   fileList.innerHTML = "";
+
   filesArray.forEach((file, index) => {
-    const row = document.createElement("div");
-    row.className = "file-row";
+    const url = URL.createObjectURL(file);
 
-    const rowContent = document.createElement("div");
-    rowContent.className = "file-row-content";
+    const item = document.createElement("div");
+    item.className = "file-item";
 
-    const img = document.createElement("img");
-    const reader = new FileReader();
-    reader.onload = (e) => (img.src = e.target.result);
-    reader.readAsDataURL(file);
+    item.innerHTML = `
+      <img src="${url}" alt="preview">
+      <span>${file.name}</span>
+      <button class="delete-btn" data-index="${index}">✖</button>
+    `;
 
-    const span = document.createElement("span");
-    span.textContent = file.name;
-
-    rowContent.appendChild(img);
-    rowContent.appendChild(span);
-
-    const removeBtn = document.createElement("button");
-    removeBtn.type = "button";
-    removeBtn.textContent = "Удалить";
-    removeBtn.addEventListener("click", () => {
-      filesArray.splice(index, 1);
-      renderList();
-    });
-
-    row.appendChild(rowContent);
-    row.appendChild(removeBtn);
-
-    fileList.appendChild(row);
-  });
-
-  // Инициализируем Sortable.js на контейнере
-  new Sortable(fileList, {
-    animation: 150,
-    onEnd: (evt) => {
-      const movedItem = filesArray.splice(evt.oldIndex, 1)[0];
-      filesArray.splice(evt.newIndex, 0, movedItem);
-      renderList();
-    },
+    fileList.appendChild(item);
   });
 }
 
-// Конвертация в PDF
+fileList.addEventListener("click", (e) => {
+  if (!e.target.classList.contains("delete-btn")) return;
+
+  const index = e.target.dataset.index;
+  filesArray.splice(index, 1);
+  renderFileList();
+});
+
 convertBtn.addEventListener("click", async () => {
   if (filesArray.length === 0) {
-    alert("Добавь хотя бы один файл");
+    alert(
+      "🤣 Yo dude! I'm a converter, not a magician! Upload an image first!",
+    );
     return;
   }
+
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF({ unit: "mm", format: "a4" });
-  const pageW = 210,
-    pageH = 297,
-    margin = 10;
-  const pxToMm = (px) => (px * 25.4) / 96;
 
   for (let i = 0; i < filesArray.length; i++) {
-    const file = filesArray[i];
-    const imgData = await new Promise((resolve) => {
-      const r = new FileReader();
-      r.onload = (e) => resolve(e.target.result);
-      r.readAsDataURL(file);
-    });
+    const imgData = await readFileAsDataURL(filesArray[i]);
 
     const img = new Image();
     img.src = imgData;
     await new Promise((res) => (img.onload = res));
 
-    const w = pxToMm(img.width);
-    const h = pxToMm(img.height);
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
 
-    const availW = pageW - margin * 2;
-    const availH = pageH - margin * 2;
+    const ratio = Math.min(pageWidth / img.width, pageHeight / img.height);
+    const w = img.width * ratio;
+    const h = img.height * ratio;
+    const x = (pageWidth - w) / 2;
+    const y = (pageHeight - h) / 2;
 
-    const ratio = Math.min(availW / w, availH / h);
-    const drawW = w * ratio;
-    const drawH = h * ratio;
-    const x = (pageW - drawW) / 2;
-    const y = (pageH - drawH) / 2;
-
-    pdf.addImage(imgData, "JPEG", x, y, drawW, drawH);
+    pdf.addImage(imgData, "JPEG", x, y, w, h);
     if (i < filesArray.length - 1) pdf.addPage();
   }
 
-  pdf.save("converted.pdf");
-  alert("Готово! PDF создан ");
+  pdf.save("output.pdf");
+  alert("PDF is ready! 🎉");
 });
+
+function readFileAsDataURL(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsDataURL(file);
+  });
+}
+
+const errorMessage = document.getElementById("errorMessage");
+
+function validateFile(file) {
+  if (file.type !== "image/jpeg") {
+    errorMessage.textContent = "😂 Hey dude! Wrong file! Upload a JPG or JPEG!";
+    errorMessage.hidden = false;
+    return false;
+  }
+
+  return true;
+}
