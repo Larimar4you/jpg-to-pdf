@@ -1,44 +1,86 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #f5f5fa;
+  font-family: Arial, sans-serif;
+}
+
+main {
+  max-width: 540px;
+  margin: 60px auto;
+  text-align: center;
+}
+
+h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
 #dropArea {
-    border: 2px dashed #888;
-    border-radius: 12px;
-    padding: 30px;
-    text-align: center;
-    cursor: pointer;
-    transition: 0.3s;
+  display: block;
+  background: white;
+}
+
+#convertBtn {
+  margin-top: 25px;
+  padding: 10px 16px;
+  background: #a3cc91;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#convertBtn:hover {
+  background: #88b978;
+}
+
+#dropArea {
+  border: 2px dashed #888;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 #dropArea.active {
-    border-color: #4CAF50;
-    background: #eaffea;
+  border-color: #4caf50;
+  background: #eaffea;
 }
 
 #fileList {
-    margin-top: 15px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .file-item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .file-item img {
-    width: 120px;
-    border-radius: 6px;
+  width: 120px;
+  border-radius: 6px;
 }
 
 .delete-btn {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: red;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 14px;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
 }
