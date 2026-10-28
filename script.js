@@ -5,8 +5,6 @@ const convertBtn = document.getElementById("convertBtn");
 
 let filesArray = [];
 
-dropArea.addEventListener("click", () => fileInput.click());
-
 dropArea.addEventListener("dragover", (e) => {
   e.preventDefault();
   dropArea.classList.add("active");
@@ -83,8 +81,12 @@ convertBtn.addEventListener("click", async () => {
     const imgData = await readFileAsDataURL(filesArray[i]);
 
     const img = new Image();
-    img.src = imgData;
-    await new Promise((res) => (img.onload = res));
+
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+      img.src = imgData;
+    });
 
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
