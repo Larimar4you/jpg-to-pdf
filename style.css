@@ -10,7 +10,7 @@ body {
 }
 
 main {
-  max-width: 540px;
+  width: min(1100px, 94%);
   margin: 60px auto;
   text-align: center;
 }
@@ -28,7 +28,7 @@ h2 {
 #convertBtn {
   margin-top: 25px;
   padding: 10px 16px;
-  background: #a3cc91;
+  background: #2e7d32;
   border: none;
   border-radius: 6px;
   color: white;
@@ -50,14 +50,29 @@ h2 {
 }
 
 #dropArea.active {
-  border-color: #4caf50;
+  border-color: #2e7d32;
   background: #eaffea;
 }
 
 #fileList {
-  margin-top: 15px;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.file-item img {
+  width: 100%;
+  height: 110px;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
+#fileList {
+  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 15px;
 }
 
@@ -66,21 +81,68 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 .file-item img {
-  width: 120px;
-  border-radius: 6px;
+  width: 60px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.file-item span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
 }
 
 .delete-btn {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: red;
+  position: static;
+  background: #c0392b;
   color: white;
   border: none;
-  border-radius: 50%;
+  border-radius: 5px;
+  padding: 7px 10px;
   cursor: pointer;
   font-size: 14px;
+  flex-shrink: 0;
+}
+
+.delete-btn:hover {
+  background: #a93226;
+}
+
+.toast {
+  position: fixed;
+  top: 30px;
+  left: 60px;
+
+  background: #ffffff;
+  color: #263238;
+  border: 1px solid #e5e7eb;
+  border-left: 4px solid #2e7d32;
+  padding: 16px 24px;
+  border-radius: 10px;
+
+  font-size: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
 }

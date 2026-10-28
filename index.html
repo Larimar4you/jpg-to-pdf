@@ -19,7 +19,7 @@
             <input 
                 type="file" 
                 id="fileInput" 
-                accept=".jpg,.jpeg,image/jpeg*" multiple 
+                accept=".jpg,.jpeg,image/jpeg" multiple 
                 hidden 
                 aria-label="Upload images"
             >
@@ -32,6 +32,8 @@
         ></p>
 
         <div id="fileList" class="file-list" aria-live="polite"></div>
+
+        <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
         <button type="button" id="convertBtn">Create PDF</button>
     </main>

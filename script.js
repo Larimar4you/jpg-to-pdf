@@ -68,7 +68,7 @@ fileList.addEventListener("click", (e) => {
 
 convertBtn.addEventListener("click", async () => {
   if (filesArray.length === 0) {
-    alert(
+    showToast(
       "🤣 Yo dude! I'm a converter, not a magician! Upload an image first!",
     );
     return;
@@ -102,7 +102,7 @@ convertBtn.addEventListener("click", async () => {
   }
 
   pdf.save("output.pdf");
-  alert("PDF is ready! 🎉");
+  showToast("PDF is ready!");
 });
 
 function readFileAsDataURL(file) {
@@ -123,4 +123,19 @@ function validateFile(file) {
   }
 
   return true;
+}
+
+let toastTimeout;
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(toastTimeout);
+
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
 }
