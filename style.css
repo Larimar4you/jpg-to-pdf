@@ -107,18 +107,22 @@ h2 {
 
 .delete-btn {
   position: static;
-  background: #c0392b;
-  color: white;
+  background: #f1f3f5;
+  color: #6b7280;
   border: none;
-  border-radius: 5px;
-  padding: 7px 10px;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
   cursor: pointer;
   font-size: 14px;
   flex-shrink: 0;
+  transition: 0.2s ease;
 }
 
 .delete-btn:hover {
-  background: #a93226;
+  background: #fee2e2;
+  color: #dc2626;
 }
 
 .toast {
